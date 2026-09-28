@@ -1,0 +1,342 @@
+export const DEFAULT_AI_PROMPTS = {
+
+  // ============================================================
+  // 1. REQUIRED OUTPUT CONTRACT
+  // ============================================================
+
+  output_contract: {
+    instruction: `
+      Return ONLY valid JSON.
+
+      The response MUST follow this exact structure.
+      Do not rename, remove, merge, or add fields.
+
+      Every social media platform MUST independently return:
+      - headline
+      - post_text
+      - hashtags
+
+      Each platform must be customized according to its
+      platform-specific instructions below.
+    `,
+
+    schema: {
+      manifest: {
+        headline: "string",
+        captions: "string",
+        flags: ["string"]
+      },
+
+      post_creation: {
+        headline: "string",
+        post_text: "string",
+        hashtags: ["string"]
+      },
+
+      social_media: {
+        twitter: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        instagram: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        linkedin: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        tiktok: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        youtube: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        facebook: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        },
+
+        telegram: {
+          headline: "string",
+          post_text: "string",
+          hashtags: ["string"]
+        }
+      }
+    }
+  },
+
+
+  // ============================================================
+  // 2. VIDEO / MANIFEST
+  // ============================================================
+
+  manifest: {
+    headline: {
+      prompt: "Create a compelling headline for this QuickTake video about [topic]. Make it engaging and click-worthy while staying accurate to the source material. Focus on the most important data point or finding.",
+      maxLength: 65,
+      minLength: 55
+    },
+
+    captions: {
+      prompt: "Generate engaging thumbnail text for this video that will attract clicks. Create a short, punchy phrase that highlights the most interesting or surprising aspect of the story.",
+      maxLength: 65,
+      minLength: 50
+    },
+
+    flags: {
+      prompt: "Identify countries most directly associated with this story. Return as comma-separated country codes (ISO 3166-1 alpha-2 format). Focus on countries where the events occurred, companies are headquartered, or policies apply.",
+      maxItems: 5
+    }
+  },
+
+
+  // ============================================================
+  // 3. WEBSITE OWN POST
+  // ============================================================
+
+  post_creation: {
+    headline: {
+      prompt: "Transform this source headline into a new, engaging version for social media. Must differ from original by at least 30%. Front-load the most important information and use active voice.",
+      maxLength: 120,
+      minLength: 40
+    },
+
+    post_text: {
+      prompt: "Create engaging social media content from this article. Structure as: hook paragraph + supporting details + implications + call-to-action. Use HTML formatting and keep under platform limits.",
+      maxLength: 5000,
+      minLength: 200
+    },
+
+    hashtags: {
+      prompt: "Generate relevant hashtags. Mix broad categories with specific topics. Include trending terms when applicable. Format as lowercase with no spaces.",
+      maxItems: 7,
+      minItems: 3
+    }
+  },
+
+
+  // ============================================================
+  // 4. SOCIAL MEDIA
+  // ============================================================
+
+  social_media: {
+
+    twitter: {
+
+      headline: {
+       prompt: "Create concise Twitter/X content that front-loads the most important information. Use active voice and compelling hooks. Keep under 250 characters for optimal engagement.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 250
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 2
+      },
+
+      tone: "concise",
+      emphasis: "hook"
+    },
+
+
+    instagram: {
+
+      headline: {
+        prompt: "Create engaging Instagram content with visual storytelling focus. Use emojis strategically and break into short, readable paragraphs. Emphasize emotional connection and visual elements.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 400
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 5
+      },
+
+      tone: "engaging",
+      emphasis: "visual"
+    },
+
+
+    linkedin: {
+
+      headline: {
+        prompt: "Create professional LinkedIn content that highlights business implications and industry insights. Use professional tone while remaining accessible. Focus on thought leadership and credible analysis.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 500
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 5
+      },
+
+      tone: "professional",
+      emphasis: "context"
+    },
+
+
+    tiktok: {
+
+      headline: {
+        prompt: "Create casual, trend-aware TikTok content that hooks viewers in the first sentence. Use conversational language and short, punchy sentences. Reference trending topics when relevant.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 300
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 5
+      },
+
+      tone: "casual",
+      emphasis: "trend"
+    },
+
+    youtube: {
+
+      headline: {
+        prompt: "Create informative YouTube description with full context and detail. Optimize for SEO with keywords. Provide comprehensive background information.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 600
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 8
+      },
+
+      tone: "informative",
+      emphasis: "context"
+    },
+
+    facebook: {
+
+      headline: {
+        prompt: "Create conversational Facebook content that encourages community discussion. Use friendly, approachable tone. Include questions or calls-to-action to drive comments. Focus on relatability and engagement.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 500
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 8
+      },
+
+      tone: "conversational",
+      emphasis: "engagement"
+    },
+
+    telegram: {
+
+      headline: {
+        prompt: "Create informative Telegram content with clear, concise messaging. Use markdown formatting for emphasis. Focus on delivering key information quickly.",
+        maxLength: 120
+      },
+
+      post_text: {
+        prompt: "...",
+        maxLength: 4096
+      },
+
+      hashtags: {
+        prompt: "...",
+        maxItems: 5
+      },
+
+      tone: "informative",
+      emphasis: "context"
+    },
+  }
+};
+
+## The resulting AI response should always be
+
+{
+  "manifest": {
+    "headline": "...",
+    "captions": "...",
+    "flags": ["IN", "US"]
+  },
+
+  "post_creation": {
+    "headline": "...",
+    "post_text": "...",
+    "hashtags": ["#news", "#technology"]
+  },
+
+  "social_media": {
+    "twitter": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Tech"]
+    },
+    "instagram": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Technology", "#News"]
+    },
+    "linkedin": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Business", "#Technology"]
+    },
+    "tiktok": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Tech"]
+    },
+    "youtube": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Technology"]
+    },
+    "facebook": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#News"]
+    },
+    "telegram": {
+      "headline": "...",
+      "post_text": "...",
+      "hashtags": ["#AI", "#Technology"]
+    }
+  }
+}
